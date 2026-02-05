@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMPromptGenerator - Professional AI Tool</title>
+    <style>
+        :root { --p: #2563eb; --s: #1e40af; --bg: #f1f5f9; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); display: flex; justify-content: center; padding: 40px 20px; margin: 0; }
+        .card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 650px; text-align: center; }
+        
+        /* 🎨 Logo Styles */
+        .logo-container { margin-bottom: 15px; display: flex; justify-content: center; align-items: center; gap: 12px; }
+        .logo-circle { width: 50px; height: 50px; background: black; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
+        .logo-s { color: white; font-size: 32px; font-weight: bold; font-family: Arial, sans-serif; line-height: 0; }
+        
+        h1 { color: #000; margin: 0; font-size: 26px; letter-spacing: -0.5px; }
+        .subtitle { text-align: center; color: #64748b; margin-bottom: 25px; margin-top: 5px; }
+        
+        textarea { width: 100%; height: 110px; padding: 15px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 16px; box-sizing: border-box; transition: 0.3s; }
+        textarea:focus { border-color: var(--p); outline: none; }
+        
+        button { width: 100%; background: #000; color: white; border: none; padding: 15px; font-size: 18px; font-weight: 600; border-radius: 12px; cursor: pointer; margin-top: 15px; transition: 0.3s; }
+        button:hover { background: #333; transform: scale(1.01); }
+        
+        .result-box { margin-top: 25px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: none; text-align: left; position: relative; }
+        .result-box.show { display: block; animation: fadeIn 0.4s ease-in; }
+        .label { font-weight: bold; color: #000; margin-bottom: 10px; display: block; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+        #finalPrompt { font-style: normal; color: #334155; line-height: 1.6; white-space: pre-wrap; }
+        .copy-btn { background: #10b981; margin-top: 15px; padding: 10px; font-size: 14px; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <!-- Website Logo Section -->
+    <div class="logo-container">
+        <div class="logo-circle">
+            <span class="logo-s">S</span>
+        </div>
+        <h1>smpromptgenerator.com</h1>
+    </div>
+    
+    <p class="subtitle">AI के लिए प्रोफेशनल प्रॉम्प्ट्स तुरंत तैयार करें</p>
+
+    <textarea id="userInput" placeholder="उदाहरण: Write a formal resignation letter या Create a workout plan..."></textarea>
+    <button onclick="makeProfessional()">Convert to Professional ✨</button>
+
+    <div id="resultBox" class="result-box">
+        <span class="label">Professional Result:</span>
+        <div id="finalPrompt"></div>
+        <button class="copy-btn" onclick="copyText()">Copy Prompt</button>
+    </div>
+</div>
+
+<script>
+    function makeProfessional() {
+        const input = document.getElementById('userInput').value;
+        if (!input.trim()) return alert("Please enter something!");
+
+        let role = "Expert Assistant";
+        const lowInput = input.toLowerCase();
+
+        // Simple Smart Logic for Context
+        if(lowInput.includes("email") || lowInput.includes("mail")) role = "Executive Communications Expert";
+        else if(lowInput.includes("code") || lowInput.includes("script")) role = "Senior Software Engineer";
+        else if(lowInput.includes("marketing") || lowInput.includes("ad")) role = "Digital Marketing Strategist";
+        else if(lowInput.includes("story") || lowInput.includes("book")) role = "Professional Narrative Writer";
+
+        const enhanced = `[ROLE]: Act as a ${role}. 
+[TASK]: ${input}
+[CONSTRAINTS]: Use professional language, ensure high accuracy, and provide the response in a clear, structured format (use bullet points or headers if needed).
+[TONE]: Professional and Objective.`;
+
+        document.getElementById('finalPrompt').innerText = enhanced;
+        document.getElementById('resultBox').classList.add('show');
+    }
+
+    function copyText() {
+        const text = document.getElementById('finalPrompt').innerText;
+        navigator.clipboard.writeText(text);
+        alert("Prompt Copied!");
+    }
+</script>
+
+</body>
+</html>
